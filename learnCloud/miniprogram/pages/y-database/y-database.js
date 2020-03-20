@@ -6,7 +6,13 @@ const db = wx.cloud.database();
 // 2.获取操作的集合
 const collection = db.collection("students");
 
+const limit = 3;
+
 Page({
+
+  data:({
+    page: 0
+  }),
 
   addDataToDB: function() {
     collection.add({
@@ -47,7 +53,103 @@ Page({
       .catch(console.log)
   },
 
-  queryDataToDB: function () {
+  
+  queryDataFromDB: function () {
 
+    // 1.精确查找
+    // collection
+    //   .doc("255a5c90-a1eb-4741-bd3b-e91c674015a5")
+    //   .get()
+    //   .then(console.log)
+    //   .catch(console.error)
+
+    // 2.条件查找
+    // collection
+    //   .where({
+    //   age: 25
+    //   })
+    //   .get()
+    //   .then(console.log)
+    //   .catch(console.log)
+    
+    // 3.使用查询指令数据查询
+    // collection
+    //   .where({
+    //     age: db.command.gt(20)
+    //   })
+    //   .get()
+    //   .then(console.log)
+    //   .catch(console.log)
+
+    // 4.根据正则表达式获取数据
+    // collection
+    //   .where({
+    //     name: db.RegExp({
+    //       regexp: "^yj.*",
+    //       options: "i"
+    //     })
+    //   })
+    //   .get()
+    //   .then(console.log)
+    //   .catch(console.log)
+
+    // 5.不跟任何的条件，直接查询整个集合
+    // collection
+    //   .get()
+    //   .then(console.log)
+    //   .catch(console.log)
+
+    // 6.几个字段的作用
+    // field: 过滤只需要获取的字段
+    // collection
+    //   .where({ age: db.command.gte(25) })
+    //   .field({
+    //     name: true,
+    //     age: true,
+    //     height: true,
+    //   })
+    //   .get()
+    //   .then(console.log)
+    //   .catch(console.log)
+
+    // skip: 跳过多少条数据
+    // limit: 本次获取多少条数据
+    // orderBy: 排序
+    db.collection("lol")
+      .skip(this.data.page * limit)
+      .limit(limit)
+      .orderBy("rid", "asc")
+      .get()
+      .then(res => {
+        console.log(res);
+        this.data.page += 1;
+      })
+      .catch(console.log)
   },
+
+  startMonitor: function() {
+    db.collection("chatroom")
+      .where({ groupid: "110" })
+      .watch({
+        onChange: function(snap) {
+          console.log(snap)
+        },
+        onError: function(err) {
+          console.log(err)
+        }
+      })
+  },
+
+  sendMessage: function () {
+    db.collection("chatroom")
+      .add({
+        data: {
+          groupid: "110",
+          message: "你吃了吗",
+        }
+      })
+      .then(console.log)
+      .catch(console.log)
+  }
+
 })
