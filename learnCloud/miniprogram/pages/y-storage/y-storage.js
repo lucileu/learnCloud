@@ -5,62 +5,73 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    imageFileID: "",
+    videoFileID: "",
+    downloadVideoFileID: "",
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  uploadImage: function () {
+    wx.chooseImage({
+      success: (res) => {
+        const filePath = res.tempFilePaths[0];
+        const timeStamp = new Date().getTime();
+        const openid = "dfjoi123";
+        const cloudPath = `images/${timeStamp}_${openid}.png`;
+        wx.cloud.uploadFile({
+          filePath,
+          cloudPath,
+        }).then((res) => {
+          console.log(res);
+          this.setData({
+            imageFileID: res.fileID
+          })
+        })
+      },
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  uploadVideo: function() {
+    wx.chooseVideo({
+      success: (res) => {
+        const filePath = res.tempFilePath;
+        const timeStamp = new Date().getTime();
+        const openid = "dfjoi123";
+        const cloudPath = `videos/${timeStamp}_${openid}.mp4`;
+        wx.cloud.uploadFile({
+          filePath,
+          cloudPath,
+        }).then((res) => {
+          console.log(res);
+          this.setData({
+            videoFileID: res.fileID
+          })
+        })
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  getTempURL: function() {
+    const fileID = "cloud://code-yj-ukuxa.636f-code-yj-ukuxa-1301132693/videos/1584696329072_dfjoi123.mp4";
+    wx.cloud.getTempFileURL({
+      fileList: [fileID],
+    }).then(console.log)
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  downloadVideo: function() {
+    wx.cloud.downloadFile({
+      fileID: "cloud://code-yj-ukuxa.636f-code-yj-ukuxa-1301132693/videos/1584696329072_dfjoi123.mp4"
+    }).then(res => {
+      console.log(res);
+      this.setData({
+        downloadVideoFileID: res.tempFilePath
+      })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  deleteFile: function() {
+    const fileID = "cloud://code-yj-ukuxa.636f-code-yj-ukuxa-1301132693/images/1584693311531_dfjoi123.png";
+    wx.cloud.deleteFile({
+      fileList: [fileID]
+    }).then(console.log)
   }
 })

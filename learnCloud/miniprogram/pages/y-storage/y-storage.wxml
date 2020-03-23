@@ -1,2 +1,12 @@
 <!--pages/y-storage/y-storage.wxml-->
-<text>pages/y-storage/y-storage.wxml</text>
+<button bindtap="uploadImage">上传图片</button>
+<image wx-if="{{ imageFileID }}" src="{{ imageFileID }}" />
+<button bindtap="uploadVideo">上传视频</button>
+<video wx-if="{{ videoFileID }}" src="{{ videoFileID }}" />
+
+<button bindtap="getTempURL" >获取临时链接L</button>
+
+<button bindtap="downloadVideo">下载视频文件</button>
+<video wx-if="{{ downloadVideoFileID }}" src="{{ downloadVideoFileID }}" />
+
+<button bindtap="deleteFile">删除云存储文件</button>

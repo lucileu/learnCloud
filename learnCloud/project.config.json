@@ -47,6 +47,14 @@
 					"id": 1,
 					"name": "云数据库",
 					"pathName": "pages/y-database/y-database",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "云存储",
+					"pathName": "pages/y-storage/y-storage",
+					"query": "",
 					"scene": null
 				}
 			]
