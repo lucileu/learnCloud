@@ -11,9 +11,10 @@
 	},
 	"appid": "wx7a5fbbf03896889a",
 	"projectname": "learnCloud",
-	"libVersion": "2.8.1",
+	"libVersion": "2.10.3",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -54,6 +55,13 @@
 					"id": -1,
 					"name": "云存储",
 					"pathName": "pages/y-storage/y-storage",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "云函数",
+					"pathName": "pages/y-cloudfunc/y-cloudfunc",
 					"query": "",
 					"scene": null
 				}

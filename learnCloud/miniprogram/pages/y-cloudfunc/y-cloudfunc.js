@@ -5,62 +5,73 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    miniCodeFileID: ""
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  basicUsing: function () {
+    wx.cloud.callFunction({
+      name: "sum",
+      data: {
+        sum1: 200,
+        sum2: 300
+      }
+    }).then(console.log)
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  getOpenID: function() {
+    wx.cloud.callFunction({
+      name: "login",
+    }).then(res => {
+      console.log(res);
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  removeMultiData: function() {
+    wx.cloud.callFunction({
+      name: "removeMultiData"
+    }).then(console.log)
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  generateCode: function() {
+    wx.cloud.callFunction({
+      name: "generateCode"
+    }).then(res => {
+      this.setData({
+        miniCodeFileID: res.result.fileID
+      })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  submitForm: function(evt) {
+    const formId = evt.detail.formId;
+    wx.cloud.callFunction({
+      name: "submitForm",
+      data: {
+        formId
+      }
+    }).then(res => {
+      console.log(res)
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  subscribeMessage: function() {
+    
+    wx.requestSubscribeMessage({
+      tmplIds: ['1ttTJyI-G0wF9OqoI-y0fTfo9zpfJOXAABzEUhGzu2o'],
+      success: (res) => {
+        if (res.errMsg === "requestSubscribeMessage:ok") {
+          
+          console.log("订阅成功");
+        }
+      }
+    })
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  sendSubscribeMessage: function() {
+    wx.cloud.callFunction({
+      name: "sendSubscribeMessage"
+    }).then(res => {
+      console.log(res);
+    })
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

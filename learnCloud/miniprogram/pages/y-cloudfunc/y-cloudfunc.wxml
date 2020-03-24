@@ -1,2 +1,18 @@
 <!--pages/y-cloudfunc/y-cloudfunc.wxml-->
-<text>pages/y-cloudfunc/y-cloudfunc.wxml</text>
+
+<button bindtap="basicUsing">云函数的基本使用</button>
+
+<button bindtap="getOpenID">获取OpenID</button>
+
+<button bindtap="removeMultiData">删除多条数据</button>
+
+<button bindtap="generateCode">生成小程序码</button>
+<image wx-if="{{ miniCodeFileID }}" src="{{ miniCodeFileID }}" />
+
+<form report-submit="true" bindsubmit="submitForm">
+  <button form-type="submit">提交表单</button>
+</form>
+
+<button bindtap="subscribeMessage">订阅消息</button>
+
+<button bindtap="sendSubscribeMessage">发送订阅消息</button>
